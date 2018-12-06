@@ -1,0 +1,15 @@
+build
+logs
+**/target
+/.idea
+/.idea_modules
+/.classpath
+/.gradle
+/.project
+/.settings
+/RUNNING_PID
+build.gradle
+sbt*
+gradle*
+project/project
+play-scala-starter-example.iml
