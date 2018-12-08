@@ -81,6 +81,12 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
     Ok(Json.obj("status" ->"OK", "message" -> ("ToDo '"+name+"' changed.") ))
   }
 
+  // POSTからのjsonを受け取って削除する
+  def todoDeleteJson(todoId: Long) = Action(parse.json) { request =>
+    todoService.delete(todoId)
+    Ok(Json.obj("status" ->"OK", "message" -> ("ToDoId '"+todoId+"' deleted.") ))
+  }
+
   def todoDelete(todoId: Long) = Action { implicit request: MessagesRequest[AnyContent] =>
     todoService.delete(todoId)
     Redirect(routes.TodoController.list())

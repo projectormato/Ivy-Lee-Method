@@ -30,3 +30,6 @@ POST   /todo/:todoId                controllers.TodoController.todoUpdate(todoId
 POST   /json/:todoId                controllers.TodoController.todoUpdateJson(todoId:Long)
 # for ToDo sample app ToDo delete
 POST   /todo/:todoId/delete         controllers.TodoController.todoDelete(todoId:Long)
+# for ToDo sample app ToDo json
+POST   /json/:todoId/delete         controllers.TodoController.todoDeleteJson(todoId:Long)
+
