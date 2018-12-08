@@ -34,7 +34,6 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
   // json形式で一覧を返す
   def todoJsonList = Action { implicit request: MessagesRequest[AnyContent] =>
     val json = Json.toJson(todoService.list())
-    println(todoService.list())
     Ok(json)
   }
 
@@ -56,12 +55,11 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
     (JsPath \ "name").read[String]
   )(services.Todo.apply _)
 
-
+  // POSTからのjsonを受け取ってToDoを追加する
   def todoAddJson() = Action(parse.json) { request =>
     val name: String = request.body("name").as[String]
-    println(request.body)
     todoService.insert(Todo(id = None, name))
-    Ok(Json.obj("status" ->"OK", "message" -> ("Place '"+name+"' saved.") ))
+    Ok(Json.obj("status" ->"OK", "message" -> ("ToDo '"+name+"' added.") ))
   }
 
   def todoEdit(todoId: Long) = Action { implicit request: MessagesRequest[AnyContent] =>
@@ -74,6 +72,13 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
     val name: String = todoForm.bindFromRequest().get
     todoService.update(todoId, Todo(Some(todoId), name))
     Redirect(routes.TodoController.list())
+  }
+
+  // POSTからのjsonを受け取って編集する
+  def todoUpdateJson(todoId: Long) = Action(parse.json) { request =>
+    val name: String = request.body("name").as[String]
+    todoService.update(todoId, Todo(Some(todoId), name))
+    Ok(Json.obj("status" ->"OK", "message" -> ("ToDo '"+name+"' changed.") ))
   }
 
   def todoDelete(todoId: Long) = Action { implicit request: MessagesRequest[AnyContent] =>
