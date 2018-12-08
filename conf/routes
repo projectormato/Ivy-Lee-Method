@@ -21,6 +21,8 @@ GET     /json                       controllers.TodoController.todoJsonList()
 # for ToDo sample app ToDo create
 GET     /todo/new                   controllers.TodoController.todoNew()
 POST    /todo                       controllers.TodoController.todoAdd()
+# for ToDo sample app ToDo create json
+POST    /json                       controllers.TodoController.todoAddJson()
 # for ToDo sample app ToDo edit
 GET     /todo/edit/:todoId          controllers.TodoController.todoEdit(todoId:Long)
 POST   /todo/:todoId                controllers.TodoController.todoUpdate(todoId:Long)

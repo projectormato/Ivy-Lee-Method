@@ -34,6 +34,7 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
   // json形式で一覧を返す
   def todoJsonList = Action { implicit request: MessagesRequest[AnyContent] =>
     val json = Json.toJson(todoService.list())
+    println(todoService.list())
     Ok(json)
   }
 
@@ -47,6 +48,20 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
     val name: String = todoForm.bindFromRequest().get
     todoService.insert(Todo(id = None, name))
     Redirect(routes.TodoController.list())
+  }
+
+  // 暗黙の型変換、読み込む方
+  implicit val todoReads: Reads[services.Todo] = (
+    (JsPath \ "id").readNullable[Long] and
+    (JsPath \ "name").read[String]
+  )(services.Todo.apply _)
+
+
+  def todoAddJson() = Action(parse.json) { request =>
+    val name: String = request.body("name").as[String]
+    println(request.body)
+    todoService.insert(Todo(id = None, name))
+    Ok(Json.obj("status" ->"OK", "message" -> ("Place '"+name+"' saved.") ))
   }
 
   def todoEdit(todoId: Long) = Action { implicit request: MessagesRequest[AnyContent] =>
