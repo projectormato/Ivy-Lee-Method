@@ -14,6 +14,7 @@ GET     /assets/*file               controllers.Assets.versioned(file)
 
 # for ToDo sample app Hello.
 GET     /todo/helloworld            controllers.TodoController.helloworld()
+
 # for ToDo sample app ToDo list
 GET     /todo                       controllers.TodoController.list()
 # for ToDo sample app ToDo create
@@ -21,6 +22,16 @@ GET     /todo/new                   controllers.TodoController.todoNew()
 POST    /todo                       controllers.TodoController.todoAdd()
 # for ToDo sample app ToDo edit
 GET     /todo/edit/:todoId          controllers.TodoController.todoEdit(todoId:Long)
-POST   /todo/:todoId                controllers.TodoController.todoUpdate(todoId:Long)
+POST    /todo/:todoId                controllers.TodoController.todoUpdate(todoId:Long)
 # for ToDo sample app ToDo delete
-POST   /todo/:todoId/delete         controllers.TodoController.todoDelete(todoId:Long)
+POST    /todo/:todoId/delete         controllers.TodoController.todoDelete(todoId:Long)
+
+# returun json api
+# for ToDo sample app ToDo list json
+GET     /json                       controllers.TodoController.todoJsonList()
+# for ToDo sample app ToDo create json
+POST    /json                       controllers.TodoController.todoAddJson()
+# for ToDo sample app ToDo edit json
+POST    /json/:todoId                controllers.TodoController.todoUpdateJson(todoId:Long)
+# for ToDo sample app ToDo json
+POST    /json/:todoId/delete         controllers.TodoController.todoDeleteJson(todoId:Long)
