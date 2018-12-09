@@ -4,12 +4,12 @@
 create table todo (
   id                        bigint not null auto_increment,
   name                      varchar(255) not null,
+  todo_type                 bigint not null,
   constraint pk_todo primary key (id))
 ;
-create sequence todo_seq start with 1000;
+create sequence todo_seq start with 2;
 
-insert into todo (id,name) values (1,'書類の整理');
-insert into todo (id,name) values (2,'本の返却');
+insert into todo (id,name,todo_type) values (1,'ToDo', 1);
 
 # --- !Downs
 drop table if exists todo;

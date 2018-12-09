@@ -36,7 +36,7 @@ new Vue({
             headers: {
               "Content-Type" : "application/json"
             },
-            body: JSON.stringify({"name":this.newTodoText})
+            body: JSON.stringify({"name":this.newTodoText, "todoType": 1})
           })
           .then(function(response) {
             return response.json();
