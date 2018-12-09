@@ -33,5 +33,5 @@ GET     /json                       controllers.TodoController.todoJsonList()
 POST    /json                       controllers.TodoController.todoAddJson()
 # for ToDo sample app ToDo edit json
 POST    /json/:todoId                controllers.TodoController.todoUpdateJson(todoId:Long)
-# for ToDo sample app ToDo json
+# for ToDo sample app ToDo delete json
 POST    /json/:todoId/delete         controllers.TodoController.todoDeleteJson(todoId:Long)
