@@ -18,7 +18,7 @@ class TodoService @Inject() (dbapi: DBApi) {
   val simple = {
     get[Option[Long]]("todo.id") ~
     get[String]("todo.name") ~
-    get[Option[Long]]("todo.type") map {
+    get[Option[Long]]("todo.todo_type") map {
       case id~name~todoType => Todo(id, name, todoType)
     }
   }
