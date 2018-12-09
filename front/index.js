@@ -28,7 +28,7 @@ new Vue({
     addNewTodo: function () {
       this.todos.push({
         id: this.nextTodoId++,
-        title: this.newTodoText
+        name: this.newTodoText
       })
       fetch("http://localhost:9000/json", {
             mode: 'cors',
