@@ -45,6 +45,24 @@ new Vue({
             console.log(json);
       });
       this.newTodoText = ''
+    },
+    deleteTodo: function (id, index) {
+        this.todos.splice(index, 1);
+        var url = "http://localhost:9000/json/" + id + "/delete"
+        fetch(url, {
+            mode: 'cors',
+            method: 'POST',
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify({"id":id})
+        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function (json) {
+                console.log(json);
+            });
     }
   }
 })
