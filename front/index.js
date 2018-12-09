@@ -12,22 +12,18 @@ new Vue({
   el: '#todo-list-example',
   data: {
     newTodoText: '',
-    todos: [
-      {
-        id: 1,
-        title: 'Do the dishes',
-      },
-      {
-        id: 2,
-        title: 'Take out the trash',
-      },
-      {
-        id: 3,
-        title: 'Mow the lawn'
-      }
-    ],
+    todos: [],
     nextTodoId: 4
   },
+    mounted: function(){
+        axios.get('http://localhost:9000/json')
+            .then(function(response){
+                this.todos = response.data
+            }.bind(this))
+            .catch(function(error){
+                console.log(error)
+            })
+    },
   methods: {
     addNewTodo: function () {
       this.todos.push({
@@ -47,7 +43,6 @@ new Vue({
           })
           .then(function (json) {
             console.log(json);
-            console.log(json["message"]);
       });
       this.newTodoText = ''
     }
