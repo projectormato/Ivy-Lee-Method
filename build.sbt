@@ -16,4 +16,5 @@ libraryDependencies += "com.h2database" % "h2" % "1.4.197"
 
 libraryDependencies += jdbc
 libraryDependencies += evolutions
+libraryDependencies += filters
 libraryDependencies += "com.typesafe.play" %% "anorm" % "2.5.3"
