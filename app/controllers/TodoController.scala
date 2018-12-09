@@ -29,7 +29,7 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
   implicit val todoWrites: Writes[services.Todo] = (
     (JsPath \ "id").write[Option[Long]] and
     (JsPath \ "name").write[String] and
-    (JsPath \ "todo_type").write[Option[Long]]
+    (JsPath \ "todoType").write[Option[Long]]
   )(unlift(services.Todo.unapply))
 
   // json形式で一覧を返す
@@ -46,8 +46,8 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
 
   def todoAdd() = Action { implicit request: MessagesRequest[AnyContent] =>
     val name: String = todoForm.bindFromRequest().get
-    // todo_typeは暫定的な処理。テンプレートエンジンのフォームからの投稿は考慮されていない
-    todoService.insert(Todo(id = None, name, todo_type = Some(1L)))
+    // todoTypeは暫定的な処理。テンプレートエンジンのフォームからの投稿は考慮されていない
+    todoService.insert(Todo(id = None, name, todoType = Some(1L)))
     Redirect(routes.TodoController.list())
   }
 
@@ -55,14 +55,14 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
   implicit val todoReads: Reads[services.Todo] = (
     (JsPath \ "id").readNullable[Long] and
     (JsPath \ "name").read[String] and
-    (JsPath \ "todo_type").readNullable[Long]
+    (JsPath \ "todoType").readNullable[Long]
   )(services.Todo.apply _)
 
   // POSTからのjsonを受け取ってToDoを追加する
   def todoAddJson() = Action(parse.json) { request =>
     val name: String = request.body("name").as[String]
-    val todo_type: Option[Long] = request.body("todo_type").as[Option[Long]]
-    todoService.insert(Todo(id = None, name, todo_type = todo_type))
+    val todoType: Option[Long] = request.body("todoType").asOpt[Long]
+    todoService.insert(Todo(id = None, name, todoType = todoType))
     Ok(Json.obj("status" ->"OK", "message" -> ("ToDo '"+name+"' added.") ))
   }
 
@@ -74,7 +74,7 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
 
   def todoUpdate(todoId: Long) = Action { implicit request: MessagesRequest[AnyContent] =>
     val name: String = todoForm.bindFromRequest().get
-    // todo_typeは暫定的な処理。テンプレートエンジンのフォームからの投稿は考慮されていない
+    // todoType。テンプレートエンジンのフォームからの投稿は考慮されていない
     todoService.update(todoId, Todo(Some(todoId), name, Some(1L)))
     Redirect(routes.TodoController.list())
   }
@@ -82,8 +82,8 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
   // POSTからのjsonを受け取って編集する
   def todoUpdateJson(todoId: Long) = Action(parse.json) { request =>
     val name: String = request.body("name").as[String]
-    val todo_type: Option[Long] = request.body("todo_type").as[Option[Long]]
-    todoService.update(todoId, Todo(Some(todoId), name, todo_type))
+    val todoType: Option[Long] = request.body("todoType").asOpt[Long]
+    todoService.update(todoId, Todo(Some(todoId), name, todoType))
     Ok(Json.obj("status" ->"OK", "message" -> ("ToDo '"+name+"' changed.") ))
   }
 

@@ -8,7 +8,7 @@ import play.api.db.DBApi
 
 import scala.language.postfixOps
 
-case class Todo(id: Option[Long], name: String, todo_type: Option[Long])
+case class Todo(id: Option[Long], name: String, todoType: Option[Long])
 
 @javax.inject.Singleton
 class TodoService @Inject() (dbapi: DBApi) {
@@ -19,7 +19,7 @@ class TodoService @Inject() (dbapi: DBApi) {
     get[Option[Long]]("todo.id") ~
     get[String]("todo.name") ~
     get[Option[Long]]("todo.type") map {
-      case id~name~todo_type => Todo(id, name, todo_type)
+      case id~name~todoType => Todo(id, name, todoType)
     }
   }
 
@@ -45,7 +45,7 @@ class TodoService @Inject() (dbapi: DBApi) {
         """
       ).on(
         'name -> todo.name,
-        'todo_type -> todo.todo_type
+        'todo_type -> todo.todoType
       ).executeUpdate()
     }
   }
@@ -68,7 +68,7 @@ class TodoService @Inject() (dbapi: DBApi) {
       ).on(
         'id -> id,
         'name -> todo.name,
-        'todo_type -> todo.todo_type
+        'todo_type -> todo.todoType
       ).executeUpdate()
     }
   }
