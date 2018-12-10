@@ -8,21 +8,48 @@ Vue.component('todo-item', {
   props: ['title']
 })
 
+
+
+Vue.component('todo-today', {
+    props: ['data'],
+    template: '<div>Home component</div>'
+})
+Vue.component('todo-normal', {
+    template: '<div>Archive component</div>'
+})
+Vue.component('todo-batch', {
+    template: '<div>Posts component</div>'
+})
+
+
+//propsでそれぞれのコンポーネントにフィルターかけたdataを渡す
+
 new Vue({
   el: '#todo-list-example',
   data: {
     newTodoText: '',
     todos: [],
-    nextTodoId: 4
+    nextTodoId: 2,
+    currentTab: 'Today',
+    tabs: ['Today', 'Normal', 'Batch']
   },
     mounted: function(){
+      var filNumber = 1;
         axios.get('http://localhost:9000/json')
             .then(function(response){
-                this.todos = response.data
+                var data = response.data;
+                const result = data.filter(d => d["todoType"]==filNumber);
+                // console.log(result)
+                this.todos = result;
             }.bind(this))
             .catch(function(error){
                 console.log(error)
             })
+    },
+    computed: {
+        currentTabComponent: function () {
+            return 'todo-' + this.currentTab.toLowerCase()
+        }
     },
   methods: {
     addNewTodo: function () {
