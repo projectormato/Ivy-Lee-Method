@@ -22,6 +22,3 @@ Ivy-Lee-Methodについては[こちら](https://matome.naver.jp/odai/2150318003
 ## Constitution
 バックエンドはScala、フロントはVue.js  
 デザインやページの構成は未定です。PWAにはします。
-
-## Contribution
-Issue潰しましょう。
