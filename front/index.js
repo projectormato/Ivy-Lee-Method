@@ -9,20 +9,10 @@ Vue.component('todo-item', {
 })
 
 
-
-Vue.component('todo-today', {
-    props: ['data'],
-    template: '<div>Home component</div>'
-})
-Vue.component('todo-normal', {
-    template: '<div>Archive component</div>'
-})
-Vue.component('todo-batch', {
-    template: '<div>Posts component</div>'
-})
-
-
 //propsでそれぞれのコンポーネントにフィルターかけたdataを渡す
+//methodsでthis.todos = ~~みたいに書き換えればOK
+
+var filNumber = 1;
 
 new Vue({
   el: '#todo-list-example',
@@ -34,7 +24,6 @@ new Vue({
     tabs: ['Today', 'Normal', 'Batch']
   },
     mounted: function(){
-      var filNumber = 1;
         axios.get('http://localhost:9000/json')
             .then(function(response){
                 var data = response.data;
