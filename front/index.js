@@ -12,7 +12,7 @@ Vue.component('todo-item', {
 //propsでそれぞれのコンポーネントにフィルターかけたdataを渡す
 //methodsでthis.todos = ~~みたいに書き換えればOK
 
-var filNumber = 1;
+var data = [];
 
 new Vue({
   el: '#todo-list-example',
@@ -26,7 +26,8 @@ new Vue({
     mounted: function(){
         axios.get('http://localhost:9000/json')
             .then(function(response){
-                var data = response.data;
+                var filNumber = 1;
+                data = response.data;
                 const result = data.filter(d => d["todoType"]==filNumber);
                 // console.log(result)
                 this.todos = result;
@@ -79,6 +80,9 @@ new Vue({
             .then(function (json) {
                 console.log(json);
             });
+    },
+    todoFillter: function (filNumber) {
+        this.todos = data.filter(d => d["todoType"]==filNumber);
     }
   }
 })

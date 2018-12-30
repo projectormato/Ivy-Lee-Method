@@ -26,6 +26,11 @@
           v-on:remove="deleteTodo(todo.id, index)"
         ></li>
       </ul>
+
+      <button v-on:click="todoFillter(1)">Today</button>
+      <button v-on:click="todoFillter(2)">Normal</button>
+      <button v-on:click="todoFillter(3)">Batch</button>
+
     </div>
 
     <script src="./index.js"></script>
