@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/Ivy-Lee-Method -Dhttp.port=${PORT} -Dplay.crypto.secret=${APPLICATION_SECRET}
+web: target/universal/stage/bin/ivy-lee-method -Dhttp.port=${PORT} -Dplay.crypto.secret=${APPLICATION_SECRET}
