@@ -8,35 +8,58 @@ Vue.component('todo-item', {
   props: ['title']
 })
 
+
+//propsでそれぞれのコンポーネントにフィルターかけたdataを渡す
+//methodsでthis.todos = ~~みたいに書き換えればOK
+
+var data = [];
+var todoType = 1;
+
 new Vue({
   el: '#todo-list-example',
   data: {
     newTodoText: '',
     todos: [],
-    nextTodoId: 4
+    nextTodoId: 2,
+    currentTab: 'Today',
+    tabs: ['Today', 'Normal', 'Batch']
   },
     mounted: function(){
         axios.get('http://localhost:9000/json')
             .then(function(response){
-                this.todos = response.data
+                var filNumber = 1;
+                data = response.data;
+                const result = data.filter(d => d["todoType"]==filNumber);
+                // console.log(result)
+                this.todos = result;
             }.bind(this))
             .catch(function(error){
                 console.log(error)
             })
+    },
+    computed: {
+        currentTabComponent: function () {
+            return 'todo-' + this.currentTab.toLowerCase()
+        }
     },
   methods: {
     addNewTodo: function () {
       this.todos.push({
         id: this.nextTodoId++,
         name: this.newTodoText
-      })
+      });
+      data.push({
+        id: this.nextTodoId,
+        name: this.newTodoText,
+        todoType: todoType
+      });
       fetch("http://localhost:9000/json", {
             mode: 'cors',
             method: 'POST',
             headers: {
               "Content-Type" : "application/json"
             },
-            body: JSON.stringify({"name":this.newTodoText, "todoType": 1})
+            body: JSON.stringify({"name":this.newTodoText, "todoType": todoType})
           })
           .then(function(response) {
             return response.json();
@@ -63,6 +86,10 @@ new Vue({
             .then(function (json) {
                 console.log(json);
             });
+    },
+    todoFillter: function (filNumber) {
+        this.todos = data.filter(d => d["todoType"]==filNumber);
+        todoType = filNumber;
     }
   }
 })
