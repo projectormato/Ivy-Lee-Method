@@ -13,6 +13,7 @@ Vue.component('todo-item', {
 //methodsでthis.todos = ~~みたいに書き換えればOK
 
 var data = [];
+var todoType = 1;
 
 new Vue({
   el: '#todo-list-example',
@@ -46,14 +47,19 @@ new Vue({
       this.todos.push({
         id: this.nextTodoId++,
         name: this.newTodoText
-      })
+      });
+      data.push({
+        id: this.nextTodoId,
+        name: this.newTodoText,
+        todoType: todoType
+      });
       fetch("http://localhost:9000/json", {
             mode: 'cors',
             method: 'POST',
             headers: {
               "Content-Type" : "application/json"
             },
-            body: JSON.stringify({"name":this.newTodoText, "todoType": 1})
+            body: JSON.stringify({"name":this.newTodoText, "todoType": todoType})
           })
           .then(function(response) {
             return response.json();
@@ -83,6 +89,7 @@ new Vue({
     },
     todoFillter: function (filNumber) {
         this.todos = data.filter(d => d["todoType"]==filNumber);
+        todoType = filNumber;
     }
   }
 })
