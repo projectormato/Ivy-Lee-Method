@@ -41,7 +41,7 @@ class TodoService @Inject() (dbapi: DBApi) {
     db.withConnection { implicit connection =>
       SQL(
         """
-        insert into todo values ((select next value for todo_seq), {name}, {todo_type})
+        insert into todo values ({name}, {todo_type})
         """
       ).on(
         'name -> todo.name,
