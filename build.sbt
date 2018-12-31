@@ -1,4 +1,4 @@
-name := """play-scala-starter-example"""
+name := """ivy-lee-method"""
 
 version := "1.0-SNAPSHOT"
 
