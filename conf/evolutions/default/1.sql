@@ -8,7 +8,9 @@ create table todo (
   primary key (id)
   );
 
-insert into todo (name,todo_type) values ('ToDo', 1);
+insert into todo (name,todo_type) values ('今日', 1);
+insert into todo (name,todo_type) values ('いつか', 2);
+insert into todo (name,todo_type) values ('まとめて', 3);
 
 # --- !Downs
 drop table if exists todo;
