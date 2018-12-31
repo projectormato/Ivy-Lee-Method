@@ -25,13 +25,13 @@ new Vue({
     tabs: ['Today', 'Normal', 'Batch']
   },
     mounted: function(){
-        axios.get('http://localhost:9000/json')
+        axios.get('https://ivy-tomato.herokuapp.com/json')
             .then(function(response){
                 var filNumber = 1;
                 data = response.data;
                 const result = data.filter(d => d["todoType"]==filNumber);
-                // console.log(result)
                 this.todos = result;
+                console.log(this.todos);
             }.bind(this))
             .catch(function(error){
                 console.log(error)
@@ -53,7 +53,7 @@ new Vue({
         name: this.newTodoText,
         todoType: todoType
       });
-      fetch("http://localhost:9000/json", {
+      fetch("https://ivy-tomato.herokuapp.com/json", {
             mode: 'cors',
             method: 'POST',
             headers: {
@@ -71,7 +71,7 @@ new Vue({
     },
     deleteTodo: function (id, index) {
         this.todos.splice(index, 1);
-        var url = "http://localhost:9000/json/" + id + "/delete"
+        var url = "https://ivy-tomato.herokuapp.com/json/" + id + "/delete"
         fetch(url, {
             mode: 'cors',
             method: 'POST',
