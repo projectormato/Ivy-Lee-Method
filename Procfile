@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/ivy-lee-method -Dhttp.port=9000 -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=${DATABASE_URL} -Dplay.crypto.secret=${APPLICATION_SECRET}
+web: target/universal/stage/bin/ivy-lee-method -Dhttp.port=${PORT} -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=${DATABASE_URL} -Dplay.crypto.secret=${APPLICATION_SECRET}
