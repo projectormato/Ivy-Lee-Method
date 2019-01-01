@@ -6,12 +6,9 @@ Vue.component('todo-item', {
     </li>\
   ',
   props: ['title']
-})
+});
 
-
-//propsでそれぞれのコンポーネントにフィルターかけたdataを渡す
-//methodsでthis.todos = ~~みたいに書き換えればOK
-
+//dataはサーバ側から取得したToDoの全てが入る。他でも使いたいのでここで定義してるけど、もっと良い方法あるかも
 var data = [];
 var todoType = 1;
 
@@ -31,7 +28,8 @@ new Vue({
                 data = response.data;
                 const result = data.filter(d => d["todoType"]==filNumber);
                 this.todos = result;
-                console.log(this.todos);
+                //todoの一覧を見たいときはここでlogする
+                // console.log(this.todos);
             }.bind(this))
             .catch(function(error){
                 console.log(error)
@@ -60,7 +58,8 @@ new Vue({
             return response.json();
           })
           .then(function (json) {
-            console.log(json);
+            //statusを見たい時はここでlogする
+            // console.log(json);
       });
       this.newTodoText = ''
     },
@@ -79,7 +78,8 @@ new Vue({
                 return response.json();
             })
             .then(function (json) {
-                console.log(json);
+              //statusを見たい時はここでlogする
+              // console.log(json);
             });
     },
     todoFillter: function (filNumber) {
@@ -87,4 +87,4 @@ new Vue({
         todoType = filNumber;
     }
   }
-})
+});
