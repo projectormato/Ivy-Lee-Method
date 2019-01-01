@@ -6,7 +6,7 @@ Vue.component('todo-item', {
     </li>\
   ',
   props: ['title']
-})
+});
 
 //dataはサーバ側から取得したToDoの全てが入る。他でも使いたいのでここで定義してるけど、もっと良い方法あるかも
 var data = [];
@@ -87,4 +87,4 @@ new Vue({
         todoType = filNumber;
     }
   }
-})
+});
