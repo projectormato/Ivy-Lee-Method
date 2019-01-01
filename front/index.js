@@ -37,19 +37,14 @@ new Vue({
                 console.log(error)
             })
     },
-    computed: {
-        currentTabComponent: function () {
-            return 'todo-' + this.currentTab.toLowerCase()
-        }
-    },
   methods: {
     addNewTodo: function () {
       this.todos.push({
-        id: this.nextTodoId++,
+        id: data[data.length-1].id+1,
         name: this.newTodoText
       });
       data.push({
-        id: this.nextTodoId,
+        id: data[data.length-1].id+1,
         name: this.newTodoText,
         todoType: todoType
       });
