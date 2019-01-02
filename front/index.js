@@ -8,6 +8,11 @@ Vue.component('todo-item', {
   props: ['title']
 });
 
+// local実行用
+var url = "https://ivy-tomato.herokuapp.com/json";
+var local = false;
+if (local) url = "http://localhost:9000/json";
+
 //dataはサーバ側から取得したToDoの全てが入る。他でも使いたいのでここで定義してるけど、もっと良い方法あるかも
 var data = [];
 var todoType = 1;
@@ -22,7 +27,7 @@ new Vue({
     tabs: ['Today', 'Normal', 'Batch']
   },
     mounted: function(){
-        axios.get('https://ivy-tomato.herokuapp.com/json')
+        axios.get(url)
             .then(function(response){
                 var filNumber = 1;
                 data = response.data;
@@ -46,7 +51,7 @@ new Vue({
         name: this.newTodoText,
         todoType: todoType
       });
-      fetch("https://ivy-tomato.herokuapp.com/json", {
+      fetch(url, {
             mode: 'cors',
             method: 'POST',
             headers: {
@@ -65,8 +70,8 @@ new Vue({
     },
     deleteTodo: function (id, index) {
         this.todos.splice(index, 1);
-        var url = "https://ivy-tomato.herokuapp.com/json/" + id + "/delete"
-        fetch(url, {
+        var deleteUrl = url + "/" + id + "/delete";
+        fetch(deleteUrl, {
             mode: 'cors',
             method: 'POST',
             headers: {
