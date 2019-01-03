@@ -13,7 +13,7 @@ var url = "https://ivy-tomato.herokuapp.com/json";
 var local = false;
 if (local) url = "http://localhost:9000/json";
 
-//dataはサーバ側から取得したToDoの全てが入る。他でも使いたいのでここで定義してるけど、もっと良い方法あるかも
+// dataはサーバ側から取得したToDoの全てが入る。他でも使いたいのでここで定義してるけど、もっと良い方法あるかも
 var data = [];
 var todoType = 1;
 
@@ -21,36 +21,22 @@ new Vue({
   el: '#todo-list-example',
   data: {
     newTodoText: '',
-    todos: [],
-    nextTodoId: 2,
-    currentTab: 'Today',
-    tabs: ['Today', 'Normal', 'Batch']
+    todos: []
   },
     mounted: function(){
         axios.get(url)
             .then(function(response){
-                var filNumber = 1;
                 data = response.data;
-                const result = data.filter(d => d["todoType"]==filNumber);
-                this.todos = result;
+                this.todos = data.filter(d => d["todoType"]==todoType);
                 //todoの一覧を見たいときはここでlogする
                 // console.log(this.todos);
             }.bind(this))
             .catch(function(error){
-                console.log(error)
+                console.log(error);
             })
     },
   methods: {
     addNewTodo: function () {
-      this.todos.push({
-        id: data[data.length-1].id+1,
-        name: this.newTodoText
-      });
-      data.push({
-        id: data[data.length-1].id+1,
-        name: this.newTodoText,
-        todoType: todoType
-      });
       fetch(url, {
             mode: 'cors',
             method: 'POST',
@@ -63,10 +49,21 @@ new Vue({
             return response.json();
           })
           .then(function (json) {
-            //statusを見たい時はここでlogする
+            // statusを見たい時はここでlogする
             // console.log(json);
       });
-      this.newTodoText = ''
+      this.newTodoText = '';
+      //追加したあと、整合性を保つために全件取得をしてきている
+      axios.get(url)
+        .then(function(response){
+          data = response.data;
+          this.todos = data.filter(d => d["todoType"]==todoType);
+          //todoの一覧を見たいときはここでlogする
+          // console.log(this.todos);
+        }.bind(this))
+          .catch(function(error){
+            console.log(error);
+          })
     },
     deleteTodo: function (id, index) {
         this.todos.splice(index, 1);
@@ -87,9 +84,9 @@ new Vue({
               // console.log(json);
             });
     },
-    todoFillter: function (filNumber) {
-        this.todos = data.filter(d => d["todoType"]==filNumber);
-        todoType = filNumber;
+    todoFillter: function (fillNumber) {
+        this.todos = data.filter(d => d["todoType"]==fillNumber);
+        todoType = fillNumber;
     }
   }
 });
