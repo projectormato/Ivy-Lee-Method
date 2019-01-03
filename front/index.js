@@ -1,6 +1,7 @@
 Vue.component('todo-item', {
   template: '\
     <li>\
+      <input type="checkbox">\
       {{ title }}\
       <button v-on:click="$emit(\'remove\')">Remove</button>\
     </li>\
