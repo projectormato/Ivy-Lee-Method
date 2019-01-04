@@ -1,22 +1,25 @@
 Vue.component('todo-item', {
   template: '\
     <li>\
-      <label v-bind:class="{ done: isChecked }">\
-        <input type="checkbox" v-model="isChecked">\
+      <label v-bind:class="{ done: isDone }">\
+        <input type="checkbox" v-model="isDone">\
         {{ title }}\
       </label>\
       <button v-on:click="$emit(\'remove\')">Remove</button>\
     </li>\
   ',
-  props: ['title', 'id', 'isChecked'] //isCheckedを変えるなという警告が出る、修正から
+  props: ['title', 'id', 'isChecked'],
+  data: function () {
+      return {
+          isDone: this.isChecked
+      }
+    }
 });
 
 // local実行用
 var url = "https://ivy-tomato.herokuapp.com/json";
 var local = false;
 if (local) url = "http://localhost:9000/json";
-
-// dataはサーバ側から取得したToDoの全てが入る。他でも使いたいのでここで定義してるけど、もっと良い方法あるかも
 
 new Vue({
   el: '#todo-list-example',
