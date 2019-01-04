@@ -35,7 +35,7 @@ new Vue({
                 this.allTodo = response.data;
                 this.todos = this.allTodo.filter(d => d["todoType"]==this.todoType);
                 //todoの一覧を見たいときはここでlogする
-                console.log(this.todos);
+                // console.log(this.todos);
             }.bind(this))
             .catch(function(error){
                 console.log(error);

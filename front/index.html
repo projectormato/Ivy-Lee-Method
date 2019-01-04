@@ -22,7 +22,6 @@
         <li
           is="todo-item"
           v-for="(todo, index) in todos"
-          v-bind:is-checked="false"
           v-bind:id="todo.id"
           v-bind:title="todo.name"
           v-on:remove="deleteTodo(todo.id, index)"
