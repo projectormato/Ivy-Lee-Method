@@ -6,10 +6,19 @@ The ToDo list for Ivy Lee Method.
 [こちら](https://github.com/playframework/play-scala-starter-example)のサンプルアプリケーションから、[こちら](https://qiita.com/yuichi0301/items/ead86d0251b954f07935)を参考にシンプルなToDoリストを作成してあります。
 
 ## Running
-```
+### Back
+```bash
 sbt run
 ```
 localhost:9000にアクセス、DBが無いと言われたら`[Apply this script now!]`ボタンを押して作成してください。
+
+### Front
+
+```bash
+cd front/
+ruby -run -e httpd . -p 8000
+```
+localhost:8000にアクセス、ToDoが表示されていたらOK
 
 ## What is this
 以下のようなToDoを管理するToDoリストです。
@@ -21,4 +30,3 @@ Ivy-Lee-Methodについては[こちら](https://matome.naver.jp/odai/2150318003
 
 ## Constitution
 バックエンドはScala、フロントはVue.js  
-デザインやページの構成は未定です。PWAにはします。
