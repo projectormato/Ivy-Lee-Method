@@ -5,6 +5,7 @@
     <title>ToDo List</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css">
   </head>
   <body>
     <div id="todo-list-example">
@@ -21,7 +22,7 @@
         <li
           is="todo-item"
           v-for="(todo, index) in todos"
-          v-bind:key="todo.id"
+          v-bind:id="todo.id"
           v-bind:title="todo.name"
           v-on:remove="deleteTodo(todo.id, index)"
         ></li>
