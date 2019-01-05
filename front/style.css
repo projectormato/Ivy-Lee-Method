@@ -5,17 +5,13 @@ ul {
     list-style: none;
 }
 
-button {
-    font-size: 3vw;
-    margin-right: 3vw;
-}
-
 input {
     font-size: 2vw;
 }
 
 input[type=checkbox] {
     transform: scale(3);
+    margin-right: 3vw;
 }
 
 li {
@@ -27,7 +23,14 @@ li {
 }
 
 .fill-btn {
+    font-size: 5vw;
+    margin-right: 3vw;
     padding: 1vw;
+}
+
+.remove-btn, .add-btn{
+    font-size: 3vw;
+    margin-left: 3vw;
 }
 
 #todo-ivy {

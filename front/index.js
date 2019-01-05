@@ -5,7 +5,7 @@ Vue.component('todo-item', {
         <input type="checkbox" v-model="isDone">\
         {{ title }}\
       </label>\
-      <button v-on:click="$emit(\'remove\')">Remove</button>\
+      <button v-on:click="$emit(\'remove\')" class="remove-btn">Remove</button>\
     </li>\
   ',
   props: ['title', 'id', 'isChecked'],
