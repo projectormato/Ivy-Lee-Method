@@ -37,7 +37,7 @@ class TodoService @Inject() (dbapi: DBApi) {
 
   }
 
-  def insert(todo: Todo) = {
+  def insert(todo: Todo)= {
     db.withConnection { implicit connection =>
       SQL(
         """
@@ -46,7 +46,7 @@ class TodoService @Inject() (dbapi: DBApi) {
       ).on(
         'name -> todo.name,
         'todo_type -> todo.todoType
-      ).executeUpdate()
+      ).executeInsert()
     }
   }
 
@@ -78,5 +78,4 @@ class TodoService @Inject() (dbapi: DBApi) {
       SQL("delete from todo where id = {id}").on('id -> id).executeUpdate()
     }
   }
-
 }
