@@ -22,7 +22,7 @@ var local = false;
 if (local) url = "http://localhost:9000/json";
 
 const vm = new Vue({
-  el: '#todo-list-example',
+  el: '#todo-ivy',
   data: {
     newTodoText: '',
     allTodo: [],
