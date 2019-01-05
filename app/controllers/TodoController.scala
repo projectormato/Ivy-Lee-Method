@@ -62,8 +62,8 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
   def todoAddJson() = Action(parse.json) { request =>
     val name: String = request.body("name").as[String]
     val todoType: Option[Long] = request.body("todoType").asOpt[Long]
-    todoService.insert(Todo(id = None, name, todoType = todoType))
-    Ok(Json.obj("status" ->"OK", "message" -> ("ToDo '"+name+"' added.") ))
+    val nextId: Option[Long] = todoService.insert(Todo(id = None, name, todoType = todoType))
+    Ok(Json.obj("status" -> "OK", "message" -> nextId.get ))
   }
 
   def todoEdit(todoId: Long) = Action { implicit request: MessagesRequest[AnyContent] =>

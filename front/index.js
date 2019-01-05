@@ -21,13 +21,14 @@ var url = "https://ivy-tomato.herokuapp.com/json";
 var local = false;
 if (local) url = "http://localhost:9000/json";
 
-new Vue({
+const vm = new Vue({
   el: '#todo-list-example',
   data: {
     newTodoText: '',
     allTodo: [],
     todos: [],
-    todoType: 1
+    todoType: 1,
+    nextTodoId: 1
   },
     mounted: function(){
         axios.get(url)
@@ -43,7 +44,17 @@ new Vue({
     },
   methods: {
     addNewTodo: function () {
-      fetch(url, {
+      this.allTodo.push({
+          id: this.nextTodoId,
+          name: this.newTodoText,
+          todoType: this.todoType
+      });
+      this.todos.push({
+          id: this.nextTodoId,
+          name: this.newTodoText,
+          todoType: this.todoType
+      });
+      var a = fetch(url, {
             mode: 'cors',
             method: 'POST',
             headers: {
@@ -57,22 +68,13 @@ new Vue({
           .then(function (json) {
             // statusを見たい時はここでlogする
             // console.log(json);
+            vm.todos[vm.todos.length-1].id = parseInt(json["message"])
       });
       this.newTodoText = '';
-      //追加したあと、整合性を保つために全件取得をしてきている
-      axios.get(url)
-        .then(function(response){
-          this.allTodo = response.data;
-          this.todos = this.allTodo.filter(d => d["todoType"]==this.todoType);
-          //todoの一覧を見たいときはここでlogする
-          // console.log(this.todos);
-        }.bind(this))
-          .catch(function(error){
-            console.log(error);
-          })
     },
     deleteTodo: function (id, index) {
         this.todos.splice(index, 1);
+        this.allTodo = this.allTodo.filter(d => d["id"] !== id);
         var deleteUrl = url + "/" + id + "/delete";
         fetch(deleteUrl, {
             mode: 'cors',
