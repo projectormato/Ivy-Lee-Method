@@ -74,6 +74,7 @@ const vm = new Vue({
     },
     deleteTodo: function (id, index) {
         this.todos.splice(index, 1);
+        this.allTodo = this.allTodo.filter(d => d["id"] !== id);
         var deleteUrl = url + "/" + id + "/delete";
         fetch(deleteUrl, {
             mode: 'cors',
