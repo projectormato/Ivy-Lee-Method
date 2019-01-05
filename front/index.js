@@ -18,7 +18,7 @@ Vue.component('todo-item', {
 
 // local実行用
 var url = "https://ivy-tomato.herokuapp.com/json";
-var local = true;
+var local = false;
 if (local) url = "http://localhost:9000/json";
 
 const vm = new Vue({
