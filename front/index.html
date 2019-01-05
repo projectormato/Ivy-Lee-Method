@@ -8,14 +8,14 @@
     <link rel="stylesheet" type="text/css" href="./style.css">
   </head>
   <body>
-    <div id="todo-list-example">
+    <div id="todo-ivy">
       <form v-on:submit.prevent="addNewTodo">
         <label for="new-todo">ToDo：</label>
         <input
           v-model="newTodoText"
           id="new-todo"
         >
-        <button>追加！</button>
+        <button class="add-btn">追加！</button>
       </form>
 
       <ul>
@@ -28,9 +28,9 @@
         ></li>
       </ul>
 
-      <button v-on:click="todoFillter(1)">今日</button>
-      <button v-on:click="todoFillter(2)">いつか</button>
-      <button v-on:click="todoFillter(3)">バッチ</button>
+      <button v-on:click="todoFillter(1)" class="fill-btn">今日</button>
+      <button v-on:click="todoFillter(2)" class="fill-btn">いつか</button>
+      <button v-on:click="todoFillter(3)" class="fill-btn">バッチ</button>
     </div>
 
     <script src="./index.js"></script>
