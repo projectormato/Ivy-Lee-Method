@@ -5,3 +5,10 @@ ul {
 .done {
     text-decoration: line-through;
 }
+
+#todo-ivy {
+    text-align: center;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+}
