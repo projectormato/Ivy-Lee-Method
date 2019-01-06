@@ -29,4 +29,5 @@ localhost:8000にアクセス、ToDoが表示されていたらOK
 Ivy-Lee-Methodについては[こちら](https://matome.naver.jp/odai/2150318003473236501)のまとめや[こちら](https://www.amazon.co.jp/dp/4761271760)の本などが参考になります。
 
 ## Constitution
-バックエンドはScala、フロントはVue.js  
+バックエンドはScala、フロントはVue.jsです。  
+PWAに対応しています。オフライン利用は今のところ出来ません。
