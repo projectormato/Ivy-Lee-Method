@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="The ToDo list for Ivy Lee Method.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#FFF">
+    <title>ToDo List</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" href="./images/logo152.png">
+    <link rel="apple-touch-icon" href="./images/logo152.png" sizes="152x152">
+  </head>
+  <body>
+    <div id="todo-ivy">
+      <form v-on:submit.prevent="addNewTodo">
+        <label for="new-todo">ToDo：</label>
+        <input
+          v-model="newTodoText"
+          id="new-todo"
+        >
+        <button class="add-btn">追加！</button>
+      </form>
+
+      <ul>
+        <li
+          is="todo-item"
+          v-for="(todo, index) in todos"
+          v-bind:id="todo.id"
+          v-bind:title="todo.name"
+          v-on:remove="deleteTodo(todo.id, index)"
+        ></li>
+      </ul>
+
+      <button v-on:click="todoFillter(1)" class="fill-btn">今日</button>
+      <button v-on:click="todoFillter(2)" class="fill-btn">いつか</button>
+      <button v-on:click="todoFillter(3)" class="fill-btn">バッチ</button>
+    </div>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
