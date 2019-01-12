@@ -16,7 +16,7 @@ localhost:9000にアクセス、DBが無いと言われたら`[Apply this script
 
 ```bash
 cd front/
-ruby -run -e httpd . -p 8000
+npm run dev
 ```
 localhost:8000にアクセス、ToDoが表示されていたらOK
 
