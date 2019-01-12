@@ -1,3 +1,17 @@
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import Vue from 'vue'
+// import App from './App'
+
+Vue.config.productionTip = false
+
+/* eslint-disable no-new */
+// new Vue({
+//   el: '#app',
+//   template: '<App/>',
+//   components: { App }
+// })
+
 Vue.component('todo-item', {
   template: '\
     <li>\
@@ -16,10 +30,7 @@ Vue.component('todo-item', {
     }
 });
 
-// local実行用
-var url = "https://ivy-tomato.herokuapp.com/json";
-var local = false;
-if (local) url = "http://localhost:9000/json";
+var url = process.env.API_ENDPOINT || "http://localhost:9000/json";
 
 const vm = new Vue({
   el: '#todo-ivy',
@@ -102,6 +113,6 @@ const vm = new Vue({
 // for PWA
 if('serviceWorker' in navigator) {
     navigator.serviceWorker
-        .register('./service-worker.js')
+        .register('/service-worker.js')
         .then(function() { console.log("Service Worker Registered"); });
 }
