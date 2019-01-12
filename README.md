@@ -18,11 +18,11 @@ localhost:9000にアクセス、DBが無いと言われたら`[Apply this script
 cd front/
 npm run dev
 ```
-localhost:8000にアクセス、ToDoが表示されていたらOK
+localhost:8080にアクセス、ToDoが表示されていたらOK
 
 ## What is this
 以下のようなToDoを管理するToDoリストです。
-* 今日やること： 6個
+* 今日やること： 6個前後
 * (今日ではなく)やりたいこと、やること： 複数
 * バッチ(最後にまとめてやるタスク)、習慣化： 複数
 
@@ -30,4 +30,4 @@ Ivy-Lee-Methodについては[こちら](https://matome.naver.jp/odai/2150318003
 
 ## Constitution
 バックエンドはScala、フロントはVue.jsです。  
-PWAに対応しています。オフライン利用は今のところ出来ません。
+PWAに対応しています。
