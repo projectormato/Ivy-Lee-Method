@@ -30,10 +30,7 @@ Vue.component('todo-item', {
     }
 });
 
-// local実行用
-var url = "https://ivy-tomato.herokuapp.com/json";
-var local = false;
-if (local) url = "http://localhost:9000/json";
+var url = process.env.API_ENDPOINT || "http://localhost:9000/json";
 
 const vm = new Vue({
   el: '#todo-ivy',
