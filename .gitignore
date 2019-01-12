@@ -13,3 +13,4 @@ sbt*
 gradle*
 project/project
 play-scala-starter-example.iml
+!front/build
