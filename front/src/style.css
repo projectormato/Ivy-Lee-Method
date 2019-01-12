@@ -1,0 +1,41 @@
+div {
+    margin-top: 4vw;
+}
+ul {
+    padding-left: 4vw;
+    list-style: none;
+}
+
+input {
+    font-size: 3vw;
+}
+
+input[type=checkbox] {
+    margin-right: 3vw;
+}
+
+li {
+    padding: 0.5vw 0vw;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.fill-btn {
+    font-size: 5.5vw;
+    margin-right: 3vw;
+    padding: 1vw;
+}
+
+.remove-btn, .add-btn{
+    font-size: 4vw;
+    margin-left: 3vw;
+}
+
+#todo-ivy {
+    font-size: 4.5vw;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+}

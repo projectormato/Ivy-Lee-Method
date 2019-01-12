@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>front</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/favicon-16x16.png">
+    <title>ToDo List</title>
+    <link rel="icon" type="image/png" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/logo152.png">
+
     <!--[if IE]><link rel="shortcut icon" href="/static/img/icons/favicon.ico"><![endif]-->
     <!-- Add to home screen for Android and modern mobile browsers -->
     <link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath %>static/manifest.json">
-    <meta name="theme-color" content="#4DBA87">
+    <meta name="theme-color" content="#FFF">
 
     <!-- Add to home screen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="front">
-    <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/logo152.png">
     <link rel="mask-icon" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/safari-pinned-tab.svg" color="#4DBA87">
     <!-- Add to home screen for Windows -->
     <meta name="msapplication-TileImage" content="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/msapplication-icon-144x144.png">
@@ -25,14 +25,79 @@
         for (var file of chunk.files) {
           if (file.match(/\.(js|css)$/)) { %>
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <noscript>
       This is your fallback content in case JavaScript fails to load.
     </noscript>
-    <div id="app"></div>
-    <!-- Todo: only include in production -->
-    <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
-    <!-- built files will be auto injected -->
+    <div id="todo-ivy">
+      <form v-on:submit.prevent="addNewTodo">
+        <label for="new-todo">ToDo：</label>
+        <input
+          v-model="newTodoText"
+          id="new-todo"
+        >
+        <button class="add-btn">追加！</button>
+      </form>
+
+      <ul>
+        <li
+          is="todo-item"
+          v-for="(todo, index) in todos"
+          v-bind:id="todo.id"
+          v-bind:title="todo.name"
+          v-on:remove="deleteTodo(todo.id, index)"
+        ></li>
+      </ul>
+
+      <button v-on:click="todoFillter(1)" class="fill-btn">今日</button>
+      <button v-on:click="todoFillter(2)" class="fill-btn">いつか</button>
+      <button v-on:click="todoFillter(3)" class="fill-btn">バッチ</button>
+    </div>
+    <style>
+      div {
+          margin-top: 4vw;
+      }
+      ul {
+          padding-left: 4vw;
+          list-style: none;
+      }
+
+      input {
+          font-size: 3vw;
+      }
+
+      input[type=checkbox] {
+          margin-right: 3vw;
+      }
+
+      li {
+          padding: 0.5vw 0vw;
+      }
+
+      .done {
+          text-decoration: line-through;
+      }
+
+      .fill-btn {
+          font-size: 5.5vw;
+          margin-right: 3vw;
+          padding: 1vw;
+      }
+
+      .remove-btn, .add-btn{
+          font-size: 4vw;
+          margin-left: 3vw;
+      }
+
+      #todo-ivy {
+          font-size: 4.5vw;
+          width: 100%;
+          height: auto;
+          min-height: 100vh;
+      }
+    </style>
+
   </body>
 </html>
