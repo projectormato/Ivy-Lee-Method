@@ -29,18 +29,18 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
     (JsPath \ "todoType").write[Option[Long]]
   )(unlift(services.Todo.unapply))
 
+  // 暗黙の型変換、読み込む方
+  implicit val todoReads: Reads[services.Todo] = (
+    (JsPath \ "id").readNullable[Long] and
+      (JsPath \ "name").read[String] and
+      (JsPath \ "todoType").readNullable[Long]
+    )(services.Todo.apply _)
+
   // json形式で一覧を返す
   def todoJsonList = Action { implicit request: MessagesRequest[AnyContent] =>
     val json = Json.toJson(todoService.list())
     Ok(json)
   }
-
-  // 暗黙の型変換、読み込む方
-  implicit val todoReads: Reads[services.Todo] = (
-    (JsPath \ "id").readNullable[Long] and
-    (JsPath \ "name").read[String] and
-    (JsPath \ "todoType").readNullable[Long]
-  )(services.Todo.apply _)
 
   // POSTからのjsonを受け取ってToDoを追加する
   def todoAddJson() = Action(parse.json) { request =>
@@ -62,11 +62,6 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
   def todoDeleteJson(todoId: Long) = Action(parse.json) { request =>
     todoService.delete(todoId)
     Ok(Json.obj("status" ->"OK", "message" -> ("ToDoId '"+todoId+"' deleted.") ))
-  }
-
-  def todoDelete(todoId: Long) = Action { implicit request: MessagesRequest[AnyContent] =>
-    todoService.delete(todoId)
-    Redirect(routes.TodoController.list())
   }
 
 }
