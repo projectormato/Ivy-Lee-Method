@@ -19,6 +19,7 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
     Ok("Hello World!")
   }
 
+  // list表示
   def list() = Action { implicit request: MessagesRequest[AnyContent] =>
     val items: Seq[Todo] = todoService.list()
     Ok(views.html.list(items))
@@ -38,19 +39,6 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
     Ok(json)
   }
 
-  val todoForm: Form[String] = Form("name" -> nonEmptyText)
-
-  def todoNew = Action { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.createForm(todoForm))
-  }
-
-  def todoAdd() = Action { implicit request: MessagesRequest[AnyContent] =>
-    val name: String = todoForm.bindFromRequest().get
-    // todoTypeは暫定的な処理。テンプレートエンジンのフォームからの投稿は考慮されていない
-    todoService.insert(Todo(id = None, name, todoType = Some(1L)))
-    Redirect(routes.TodoController.list())
-  }
-
   // 暗黙の型変換、読み込む方
   implicit val todoReads: Reads[services.Todo] = (
     (JsPath \ "id").readNullable[Long] and
@@ -64,19 +52,6 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
     val todoType: Option[Long] = request.body("todoType").asOpt[Long]
     val nextId: Option[Long] = todoService.insert(Todo(id = None, name, todoType = todoType))
     Ok(Json.obj("status" -> "OK", "message" -> nextId.get ))
-  }
-
-  def todoEdit(todoId: Long) = Action { implicit request: MessagesRequest[AnyContent] =>
-    todoService.findById(todoId).map { todo =>
-      Ok(views.html.editForm(todoId, todoForm.fill(todo.name)))
-    }.getOrElse(NotFound)
-  }
-
-  def todoUpdate(todoId: Long) = Action { implicit request: MessagesRequest[AnyContent] =>
-    val name: String = todoForm.bindFromRequest().get
-    // todoType。テンプレートエンジンのフォームからの投稿は考慮されていない
-    todoService.update(todoId, Todo(Some(todoId), name, Some(1L)))
-    Redirect(routes.TodoController.list())
   }
 
   // POSTからのjsonを受け取って編集する
