@@ -14,13 +14,10 @@ import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
 class TodoController @Inject()(todoService: TodoService, mcc: MessagesControllerComponents) extends MessagesAbstractController(mcc) {
-  def helloworld() = Action{ implicit request: MessagesRequest[AnyContent] =>
-    // ここのOKはステータスコード200で引数を返しますよってこと404ならNotFound()
-    Ok("Hello World!")
-  }
-
+    // list表示
   def list() = Action { implicit request: MessagesRequest[AnyContent] =>
     val items: Seq[Todo] = todoService.list()
+    // ここのOKはステータスコード200で引数を返しますよってこと404ならNotFound()
     Ok(views.html.list(items))
   }
 
@@ -32,31 +29,18 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
     (JsPath \ "todoType").write[Option[Long]]
   )(unlift(services.Todo.unapply))
 
+  // 暗黙の型変換、読み込む方
+  implicit val todoReads: Reads[services.Todo] = (
+    (JsPath \ "id").readNullable[Long] and
+      (JsPath \ "name").read[String] and
+      (JsPath \ "todoType").readNullable[Long]
+    )(services.Todo.apply _)
+
   // json形式で一覧を返す
   def todoJsonList = Action { implicit request: MessagesRequest[AnyContent] =>
     val json = Json.toJson(todoService.list())
     Ok(json)
   }
-
-  val todoForm: Form[String] = Form("name" -> nonEmptyText)
-
-  def todoNew = Action { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.createForm(todoForm))
-  }
-
-  def todoAdd() = Action { implicit request: MessagesRequest[AnyContent] =>
-    val name: String = todoForm.bindFromRequest().get
-    // todoTypeは暫定的な処理。テンプレートエンジンのフォームからの投稿は考慮されていない
-    todoService.insert(Todo(id = None, name, todoType = Some(1L)))
-    Redirect(routes.TodoController.list())
-  }
-
-  // 暗黙の型変換、読み込む方
-  implicit val todoReads: Reads[services.Todo] = (
-    (JsPath \ "id").readNullable[Long] and
-    (JsPath \ "name").read[String] and
-    (JsPath \ "todoType").readNullable[Long]
-  )(services.Todo.apply _)
 
   // POSTからのjsonを受け取ってToDoを追加する
   def todoAddJson() = Action(parse.json) { request =>
@@ -64,19 +48,6 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
     val todoType: Option[Long] = request.body("todoType").asOpt[Long]
     val nextId: Option[Long] = todoService.insert(Todo(id = None, name, todoType = todoType))
     Ok(Json.obj("status" -> "OK", "message" -> nextId.get ))
-  }
-
-  def todoEdit(todoId: Long) = Action { implicit request: MessagesRequest[AnyContent] =>
-    todoService.findById(todoId).map { todo =>
-      Ok(views.html.editForm(todoId, todoForm.fill(todo.name)))
-    }.getOrElse(NotFound)
-  }
-
-  def todoUpdate(todoId: Long) = Action { implicit request: MessagesRequest[AnyContent] =>
-    val name: String = todoForm.bindFromRequest().get
-    // todoType。テンプレートエンジンのフォームからの投稿は考慮されていない
-    todoService.update(todoId, Todo(Some(todoId), name, Some(1L)))
-    Redirect(routes.TodoController.list())
   }
 
   // POSTからのjsonを受け取って編集する
@@ -91,11 +62,6 @@ class TodoController @Inject()(todoService: TodoService, mcc: MessagesController
   def todoDeleteJson(todoId: Long) = Action(parse.json) { request =>
     todoService.delete(todoId)
     Ok(Json.obj("status" ->"OK", "message" -> ("ToDoId '"+todoId+"' deleted.") ))
-  }
-
-  def todoDelete(todoId: Long) = Action { implicit request: MessagesRequest[AnyContent] =>
-    todoService.delete(todoId)
-    Redirect(routes.TodoController.list())
   }
 
 }
