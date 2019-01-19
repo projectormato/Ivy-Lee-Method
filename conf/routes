@@ -5,8 +5,6 @@
 # show list for todo
 GET     /                           controllers.TodoController.todoJsonList()
 
-# for ToDo sample app Hello.
-GET     /todo/helloworld            controllers.TodoController.helloworld()
 # for ToDo sample app ToDo list
 GET     /todo                       controllers.TodoController.list()
 

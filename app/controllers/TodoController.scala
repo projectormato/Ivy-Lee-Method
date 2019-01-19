@@ -14,14 +14,10 @@ import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
 class TodoController @Inject()(todoService: TodoService, mcc: MessagesControllerComponents) extends MessagesAbstractController(mcc) {
-  def helloworld() = Action{ implicit request: MessagesRequest[AnyContent] =>
-    // ここのOKはステータスコード200で引数を返しますよってこと404ならNotFound()
-    Ok("Hello World!")
-  }
-
-  // list表示
+    // list表示
   def list() = Action { implicit request: MessagesRequest[AnyContent] =>
     val items: Seq[Todo] = todoService.list()
+    // ここのOKはステータスコード200で引数を返しますよってこと404ならNotFound()
     Ok(views.html.list(items))
   }
 
