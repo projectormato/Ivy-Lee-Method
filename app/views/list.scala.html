@@ -22,12 +22,11 @@
                     @items.map { todo =>
                         <tr>
                             <td>@todo.name</td>
-                            <td><a href="@controllers.routes.TodoController.todoEdit(todo.id.get)">編集</a></td>
+                            <td>@todo.todoType</td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <a href="@controllers.routes.TodoController.todoNew()">登録画面</a>
         </section>
 
     </body>
