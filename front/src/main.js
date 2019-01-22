@@ -20,9 +20,10 @@ Vue.component('todo-item', {
         {{ title }}\
       </label>\
       <button v-on:click="$emit(\'remove\')" class="remove-btn">Remove</button>\
+      <button v-if="type === 2" v-on:click="$emit(\'edit\')" class="edit-btn">今日やる</button>\
     </li>\
   ',
-  props: ['title', 'id', 'isChecked'],
+  props: ['title', 'id', 'type', 'isChecked'],
   data: function () {
       return {
           isDone: this.isChecked
@@ -102,6 +103,25 @@ const vm = new Vue({
               //statusを見たい時はここでlogする
               // console.log(json);
             });
+    },
+    // 現状はタイプを2→1の編集しかしない
+    editTodo: function (id, name) {
+      var editUrl = url + "/" + id;
+      fetch(editUrl, {
+        mode: 'cors',
+        method: 'POST',
+        headers: {
+          "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({"name": name, "todoType": 1})
+      })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function (json) {
+          //statusを見たい時はここでlogする
+          // console.log(json);
+        });
     },
     todoFillter: function (fillNumber) {
         this.todos = this.allTodo.filter(d => d["todoType"]==fillNumber);

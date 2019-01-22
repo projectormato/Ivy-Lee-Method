@@ -48,7 +48,9 @@
           v-for="(todo, index) in todos"
           v-bind:id="todo.id"
           v-bind:title="todo.name"
+          v-bind:type="todo.todoType"
           v-on:remove="deleteTodo(todo.id, index)"
+          v-on:edit="editTodo(todo.id, todo.name)"
         ></li>
       </ul>
 
@@ -87,7 +89,7 @@
           padding: 1vw;
       }
 
-      .remove-btn, .add-btn{
+      .remove-btn, .add-btn, .edit-btn{
           font-size: 4vw;
           margin-left: 3vw;
       }

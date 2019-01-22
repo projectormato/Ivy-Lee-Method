@@ -61,13 +61,11 @@ class TodoService @Inject() (dbapi: DBApi) {
       SQL(
         """
           update todo
-          set name = {name}
           set todo_type = {todo_type}
           where id = {id}
         """
       ).on(
         'id -> id,
-        'name -> todo.name,
         'todo_type -> todo.todoType
       ).executeUpdate()
     }
