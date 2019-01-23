@@ -20,9 +20,10 @@ Vue.component('todo-item', {
         {{ title }}\
       </label>\
       <button v-on:click="$emit(\'remove\')" class="remove-btn">Remove</button>\
+      <button v-if="type === 2" v-on:click="$emit(\'edit\')" class="edit-btn">今日やる</button>\
     </li>\
   ',
-  props: ['title', 'id', 'isChecked'],
+  props: ['title', 'id', 'type', 'isChecked'],
   data: function () {
       return {
           isDone: this.isChecked
@@ -45,7 +46,7 @@ const vm = new Vue({
         axios.get(url)
             .then(function(response){
                 this.allTodo = response.data;
-                this.todos = this.allTodo.filter(d => d["todoType"]==this.todoType);
+                this.todos = this.allTodo.filter(d => d["todoType"] === this.todoType);
                 //todoの一覧を見たいときはここでlogする
                 // console.log(this.todos);
             }.bind(this))
@@ -103,9 +104,34 @@ const vm = new Vue({
               // console.log(json);
             });
     },
+    // 現状はタイプを2→1の編集しかしない
+    editTodo: function (id, name) {
+      for (var i = 0; i < this.allTodo.length; ++i) {
+        if (this.allTodo[i]["id"] === id) {
+          this.allTodo[i]["todoType"] = 1;
+        }
+      }
+      this.todos = this.allTodo.filter(d => d["todoType"] === 2);
+      var editUrl = url + "/" + id;
+      fetch(editUrl, {
+        mode: 'cors',
+        method: 'POST',
+        headers: {
+          "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({"name": name, "todoType": 1})
+      })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function (json) {
+          //statusを見たい時はここでlogする
+          // console.log(json);
+        });
+    },
     todoFillter: function (fillNumber) {
-        this.todos = this.allTodo.filter(d => d["todoType"]==fillNumber);
-        this.todoType = fillNumber;
+      this.todos = this.allTodo.filter(d => d["todoType"] === fillNumber);
+      this.todoType = fillNumber;
     }
   }
 });
