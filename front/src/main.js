@@ -106,6 +106,13 @@ const vm = new Vue({
     },
     // 現状はタイプを2→1の編集しかしない
     editTodo: function (id, name) {
+      for (var i = 0; i < this.allTodo.length; ++i) {
+        console.log(this.allTodo[i]["id"]);
+        if (this.allTodo[i]["id"] === id) {
+          this.allTodo[i]["todoType"] = 1;
+        }
+      }
+      this.todos = this.allTodo.filter(d => d["todoType"]==2);
       var editUrl = url + "/" + id;
       fetch(editUrl, {
         mode: 'cors',
@@ -124,8 +131,8 @@ const vm = new Vue({
         });
     },
     todoFillter: function (fillNumber) {
-        this.todos = this.allTodo.filter(d => d["todoType"]==fillNumber);
-        this.todoType = fillNumber;
+      this.todos = this.allTodo.filter(d => d["todoType"]==fillNumber);
+      this.todoType = fillNumber;
     }
   }
 });
