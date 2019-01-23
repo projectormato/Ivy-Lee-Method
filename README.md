@@ -3,7 +3,7 @@ The ToDo list for Ivy Lee Method.
 
 最新のScalaのドキュメントは[こちら](https://www.playframework.com/documentation/2.6.x/Home)です。
 
-[こちら](https://github.com/playframework/play-scala-starter-example)のサンプルアプリケーションから、[こちら](https://qiita.com/yuichi0301/items/ead86d0251b954f07935)を参考にシンプルなToDoリストを作成してあります。
+[こちら](https://github.com/playframework/play-scala-starter-example)のサンプルアプリケーションから、[こちら](https://qiita.com/yuichi0301/items/ead86d0251b954f07935)を参考にシンプルなToDoリストを作成し、色々手を加えています。
 
 ## Running
 ### Back
