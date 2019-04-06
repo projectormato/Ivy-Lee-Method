@@ -59,50 +59,80 @@
       <button v-on:click="todoFillter(3)" class="fill-btn">バッチ</button>
     </div>
     <style>
-      div {
-          margin-top: 4vw;
-      }
       ul {
           padding-left: 4vw;
           list-style: none;
-      }
-
-      input {
-          font-size: 3vw;
-      }
-
-      input[type=checkbox] {
-          margin-right: 3vw;
       }
 
       li {
           padding: 0.5vw 0vw;
       }
 
-      .done {
-          text-decoration: line-through;
+
+      @media screen and (min-width:300px) and ( max-width:1024px) {
+        div {
+            margin-top: 4vw;
+        }
+
+        input {
+            font-size: 3vw;
+        }
+
+        input[type=checkbox] {
+            margin-right: 3vw;
+        }
+
+        .done {
+            text-decoration: line-through;
+        }
+
+        .fill-btn {
+            font-size: 5.5vw;
+            margin-right: 3vw;
+            padding: 1vw;
+        }
+
+        .remove-btn, .add-btn{
+            font-size: 4vw;
+            margin-left: 3vw;
+        }
+
+        .edit-btn-half, .remove-btn-half{
+          font-size: 2.7vw;
+          margin-left: 2.7vw;
+        }
+
+        #todo-ivy {
+            font-size: 4.5vw;
+            width: 100%;
+            height: auto;
+            min-height: 100vh;
+        }
       }
 
-      .fill-btn {
-          font-size: 5.5vw;
-          margin-right: 3vw;
-          padding: 1vw;
-      }
+      @media screen and (min-width:1024px) {
+        div {
+            margin-top: 2vw;
+        }
 
-      .remove-btn, .add-btn{
-          font-size: 4vw;
-          margin-left: 3vw;
-      }
-      .edit-btn-half, .remove-btn-half{
-        font-size: 2.7vw;
-        margin-left: 2.7vw;
-      }
+        .fill-btn {
+            font-size: 1.5vw;
+            margin-right: 1vw;
+            padding: 0.5vw;
+        }
 
-      #todo-ivy {
-          font-size: 4.5vw;
-          width: 100%;
-          height: auto;
-          min-height: 100vh;
+        .remove-btn, .add-btn, .edit-btn-half, .remove-btn-half{
+            font-size: 1.5vw;
+            margin-left: 2vw;
+        }
+
+        #todo-ivy {
+            font-size: 1.5vw;
+            width: 100%;
+            height: auto;
+            min-height: 100vh;
+        }
+
       }
     </style>
 
