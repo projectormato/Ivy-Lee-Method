@@ -19,6 +19,7 @@ Vue.component('todo-item', {
       <button v-if="type !== 2" v-on:click="$emit(\'remove\')" class="remove-btn">Remove</button>\
       <button v-if="type === 2" v-on:click="$emit(\'remove\')" class="remove-btn-half">Remove</button>\
       <button v-if="type === 2" v-on:click="$emit(\'edit\')" class="edit-btn-half">今日やる</button>\
+      <button v-if="type === 1" v-on:click="$emit(\'edit\')" class="edit-btn-half">いつかやる</button>\
     </li>\
   ',
   props: ['title', 'id', 'type', 'isChecked'],
@@ -102,14 +103,25 @@ const vm = new Vue({
               // console.log(json);
             });
     },
-    // 現状はタイプを2→1の編集しかしない
+    // 現状はタイプを2→1、1→2にする
     editTodo: function (id, name) {
+      var oldType = 0;
+      var newType = 0;
       for (var i = 0; i < this.allTodo.length; ++i) {
         if (this.allTodo[i]["id"] === id) {
-          this.allTodo[i]["todoType"] = 1;
+          if (this.allTodo[i]["todoType"] === 1) {
+            this.allTodo[i]["todoType"] = 2;
+            oldType = 1;
+            newType = 2;
+          } else if (this.allTodo[i]["todoType"] === 2) {
+            this.allTodo[i]["todoType"] = 1;
+            oldType = 2;
+            newType = 1;
+          }
         }
       }
-      this.todos = this.allTodo.filter(d => d["todoType"] === 2);
+      var body = JSON.stringify({"name": name, "todoType": newType});
+      this.todos = this.allTodo.filter(d => d["todoType"] === oldType);
       var editUrl = url + "/" + id;
       fetch(editUrl, {
         mode: 'cors',
@@ -117,7 +129,7 @@ const vm = new Vue({
         headers: {
           "Content-Type" : "application/json"
         },
-        body: JSON.stringify({"name": name, "todoType": 1})
+        body: body
       })
         .then(function(response) {
           return response.json();
