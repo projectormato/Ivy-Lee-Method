@@ -15,10 +15,7 @@ Vue.config.productionTip = false
 Vue.component('todo-item', {
   template: '\
     <li>\
-      <label v-bind:class="{ done: isDone }">\
-        <input type="checkbox" v-model="isDone">\
-        {{ title }}\
-      </label>\
+      {{ title }}\
       <button v-if="type !== 2" v-on:click="$emit(\'remove\')" class="remove-btn">Remove</button>\
       <button v-if="type === 2" v-on:click="$emit(\'remove\')" class="remove-btn-half">Remove</button>\
       <button v-if="type === 2" v-on:click="$emit(\'edit\')" class="edit-btn-half">今日やる</button>\
