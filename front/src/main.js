@@ -16,8 +16,8 @@ Vue.component('todo-item', {
   template: '\
     <li>\
       {{ title }}\
-      <button v-if="type !== 2" v-on:click="$emit(\'remove\')" class="remove-btn">Remove</button>\
-      <button v-if="type === 2" v-on:click="$emit(\'remove\')" class="remove-btn-half">Remove</button>\
+      <button v-if="type === 3" v-on:click="$emit(\'remove\')" class="remove-btn">Remove</button>\
+      <button v-if="type !== 3" v-on:click="$emit(\'remove\')" class="remove-btn-half">Remove</button>\
       <button v-if="type === 2" v-on:click="$emit(\'edit\')" class="edit-btn-half">今日やる</button>\
       <button v-if="type === 1" v-on:click="$emit(\'edit\')" class="edit-btn-half">いつかやる</button>\
     </li>\
