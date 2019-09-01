@@ -71,7 +71,8 @@
     "webpack-hot-middleware": "^2.19.1",
     "webpack-merge": "^4.1.0",
     "diff": ">=3.5.0",
-    "mem": ">=4.0.0"
+    "mem": ">=4.0.0",
+    "set-value": ">=2.0.1"
   },
   "engines": {
     "node": ">= 4.0.0",
